@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная карта плато Путорана</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .map-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .map-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .map-header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .map-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .interactive-map {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .map-point {
+            position: absolute;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .point-marker {
+            width: 30px;
+            height: 30px;
+            background: #e74c3c;
+            border: 5px solid white;
+            border-radius: 50%;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .map-point:hover .point-marker {
+            transform: scale(1.2);
+            background: #c0392b;
+        }
+
+        .point-tooltip {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .point-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .map-point:hover .point-tooltip {
+            opacity: 1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Стили для разных типов маркеров */
+        .point-marker[style*="background: #e74c3c"] {
+            background: #e74c3c !important;
+        }
+
+        .point-marker[style*="background: #3498db"] {
+            background: #3498db !important;
+        }
+
+        .point-marker[style*="background: #27ae60"] {
+            background: #27ae60 !important;
+        }
+
+        .point-marker[style*="background: #f39c12"] {
+            background: #f39c12 !important;
+        }
+
+        .point-marker[style*="background: #9b59b6"] {
+            background: #9b59b6 !important;
+        }
+
+        .point-marker[style*="background: #8e44ad"] {
+            background: #8e44ad !important;
+        }
+
+        .map-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .legend-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .legend-item h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .legend-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #2c3e50;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .map-header h1 {
+                font-size: 2rem;
+            }
+            
+            .interactive-map {
+                height: 400px;
+            }
+            
+            .map-legend {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">
+        ← Назад к сайту
+    </a>
+
+    <div class="map-container">
+        <div class="map-header">
+            <h1>Интерактивная карта плато Путорана</h1>
+            <p>Кликните на маркеры для получения подробной информации о достопримечательностях</p>
+        </div>
+
+        <div class="interactive-map">
+            <img src="Google Maps и еще 11 страниц — Личный_ Microsoft​ Edge 18.10.2025 15_39_54.png" alt="Карта плато Путорана" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+            
+            <!-- Норильск -->
+            <div class="map-point" style="top: 32.619791666666664%; left: 30.415795554577464%;" 
+                 data-title="Норильск" 
+                 data-description="Крупнейший город Арктики и мировой центр добычи цветных и платиновых металлов. ~90 км от плато Путорана.">
+                <div class="point-marker" style="background: #e74c3c;"></div>
+                <div class="point-tooltip">Норильск</div>
+            </div>
+
+            <!-- Дудинка -->
+            <div class="map-point" style="top: 32.515625%; left: 24.260013204225352%;" 
+                 data-title="Дудинка" 
+                 data-description="Столица Таймыра, ключевой порт Северного морского пути. ~120 км от плато Путорана.">
+                <div class="point-marker" style="background: #e74c3c;"></div>
+                <div class="point-tooltip">Дудинка</div>
+            </div>
+
+            <!-- Снежногорск -->
+            <div class="map-point" style="top: 52.799479166666664%; left: 29.119443221830988%;" 
+                 data-title="Снежногорск" 
+                 data-description="Город на западной границе плато Путорана. Ближайший населенный пункт к заповеднику.">
+                <div class="point-marker" style="background: #e74c3c;"></div>
+                <div class="point-tooltip">Снежногорск</div>
+            </div>
+
+            <!-- Путоранский заповедник -->
+            <div class="map-point" style="top: 37.765625%; left: 48.50352112676056%;" 
+                 data-title="Путоранский заповедник" 
+                 data-description="Центральная часть заповедника в горной местности. Объект Всемирного наследия ЮНЕСКО с 2010 года. Площадь ~250 000 км².">
+                <div class="point-marker" style="background: #8e44ad;"></div>
+                <div class="point-tooltip">Путоранский заповедник</div>
+            </div>
+
+            <!-- Озеро Лама -->
+            <div class="map-point" style="top: 32%; left: 35.95056668133803%;" 
+                 data-title="Озеро Лама" 
+                 data-description="Крупнейшее озеро плато Путорана. Длина 80 км, глубина до 350 м. Кристально чистая вода, богатая рыбой.">
+                <div class="point-marker" style="background: #3498db;"></div>
+                <div class="point-tooltip">Озеро Лама</div>
+            </div>
+
+            <!-- Озеро Виви -->
+            <div class="map-point" style="top: 72.03255208333333%; left: 47.869443221830984%;" 
+                 data-title="Озеро Виви" 
+                 data-description="Географический центр России. Символическое место, где установлен памятный знак. Координаты: 66°25′ с.ш., 94°15′ в.д.">
+                <div class="point-marker" style="background: #9b59b6;"></div>
+                <div class="point-tooltip">Озеро Виви</div>
+            </div>
+
+            <!-- Озеро Хантайское -->
+            <div class="map-point" style="top: 49.736979166666664%; left: 36.53787962147887%;" 
+                 data-title="Озеро Хантайское" 
+                 data-description="Самое глубокое озеро плато. Глубина около 450 метров. Уникальная экосистема с редкими видами рыб.">
+                <div class="point-marker" style="background: #3498db;"></div>
+                <div class="point-tooltip">Озеро Хантайское</div>
+            </div>
+
+            <!-- Тальниковый водопад -->
+            <div class="map-point" style="top: 45.947916666666664%; left: 46.313820422535215%;" 
+                 data-title="Тальниковый водопад" 
+                 data-description="Самый высокий водопад России. Высота около 700 метров, 15 ступеней. Рекордсмен по высоте свободного падения.">
+                <div class="point-marker" style="background: #f39c12;"></div>
+                <div class="point-tooltip">Тальниковый водопад</div>
+            </div>
+
+            <!-- Курейский водопад -->
+            <div class="map-point" style="top: 49%; left: 49.77511553697183%;" 
+                 data-title="Курейский водопад" 
+                 data-description="Самый мощный водопад России. Расход воды до 1000 м³/с. Впечатляющий природный каскад.">
+                <div class="point-marker" style="background: #f39c12;"></div>
+                <div class="point-tooltip">Курейский водопад</div>
+            </div>
+
+            <!-- Озеро Бельдунчана -->
+            <div class="map-point" style="top: 55.23307291666667%; left: 53.1862070862676%;" 
+                 data-title="Озеро Бельдунчана" 
+                 data-description="«Полюс недоступности» России. Самое удаленное место от всех дорог и населенных пунктов. Символ первозданной природы.">
+                <div class="point-marker" style="background: #3498db;"></div>
+                <div class="point-tooltip">Озеро Бельдунчана</div>
+            </div>
+        </div>
+
+        <div class="map-legend">
+            <div class="legend-item">
+                <h3>🏙️ Города (красные маркеры)</h3>
+                <p>Норильск, Дудинка, Снежногорск - ближайшие населенные пункты к плато</p>
+            </div>
+            <div class="legend-item">
+                <h3>🌊 Озера (синие маркеры)</h3>
+                <p>Озеро Лама, Хантайское, Бельдунчана - крупнейшие водоемы плато</p>
+            </div>
+            <div class="legend-item">
+                <h3>💧 Водопады (оранжевые маркеры)</h3>
+                <p>Тальниковый и Курейский - рекордные водопады России</p>
+            </div>
+            <div class="legend-item">
+                <h3>🦌 Заповедник (фиолетовый маркер)</h3>
+                <p>Путоранский государственный заповедник - объект ЮНЕСКО</p>
+            </div>
+            <div class="legend-item">
+                <h3>🎯 Особые места</h3>
+                <p>Озеро Виви (географический центр России)</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Обработчики для точек на карте
+        const mapPoints = document.querySelectorAll('.map-point');
+        
+        mapPoints.forEach(point => {
+            point.addEventListener('click', function() {
+                const title = this.dataset.title;
+                const description = this.dataset.description;
+                showMapModal(title, description);
+            });
+        });
+
+        // Модальное окно для карты
+        function showMapModal(title, description) {
+            const modal = document.createElement('div');
+            modal.className = 'map-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="modal-close">&times;</span>
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                </div>
+            `;
+
+            // Стили для модального окна
+            const modalStyles = `
+                <style>
+                .map-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                    animation: fadeIn 0.3s ease;
+                }
+                
+                .modal-content {
+                    background: white;
+                    padding: 2rem;
+                    border-radius: 15px;
+                    max-width: 500px;
+                    position: relative;
+                    animation: slideIn 0.3s ease;
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+                }
+                
+                .modal-close {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: #666;
+                    transition: color 0.3s ease;
+                }
+                
+                .modal-close:hover {
+                    color: #e74c3c;
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                
+                @keyframes slideIn {
+                    from { transform: translateY(-50px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+                </style>
+            `;
+
+            document.head.insertAdjacentHTML('beforeend', modalStyles);
+            document.body.appendChild(modal);
+
+            // Закрытие модального окна
+            modal.querySelector('.modal-close').addEventListener('click', function() {
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => modal.remove(), 300);
+            });
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => modal.remove(), 300);
+                }
+            });
+        }
+
+        // Добавляем стили для анимации закрытия
+        const closeStyles = `
+            <style>
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+            </style>
+        `;
+        document.head.insertAdjacentHTML('beforeend', closeStyles);
+    </script>
+</body>
+</html>

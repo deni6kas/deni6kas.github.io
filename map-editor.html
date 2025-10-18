@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор карты - Настройка точек</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .editor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .editor-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .editor-header h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .editor-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .map-editor {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .map-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: crosshair;
+        }
+
+        .draggable-point {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e74c3c;
+            border: 3px solid white;
+            border-radius: 50%;
+            cursor: move;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .draggable-point:hover {
+            transform: scale(1.2);
+        }
+
+        .point-label {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-panel {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .control-panel h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .point-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .point-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .point-info {
+            flex: 1;
+        }
+
+        .point-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.2rem;
+        }
+
+        .point-coords {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .point-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .coords-display {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .coords-display h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .coords-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .coords-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+
+        .instructions ul {
+            color: #856404;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin-bottom: 0.3rem;
+        }
+
+        .export-section {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        .export-section h3 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <div class="editor-header">
+            <h1>🗺️ Редактор карты плато Путорана</h1>
+            <p>Перетаскивайте точки на карте для точного позиционирования</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Инструкция по использованию:</h3>
+            <ul>
+                <li><strong>Перетаскивание:</strong> Кликните и перетащите точку в нужное место</li>
+                <li><strong>Координаты:</strong> Координаты обновляются автоматически при перетаскивании</li>
+                <li><strong>Выбор точки:</strong> Кликните на точку в списке, чтобы выделить её</li>
+                <li><strong>Удаление:</strong> Используйте кнопку "Удалить" для удаления точки</li>
+                <li><strong>Экспорт:</strong> Скопируйте код и вставьте в файл map.html</li>
+            </ul>
+        </div>
+
+        <div class="map-editor" id="mapEditor">
+            <img src="Google Maps и еще 11 страниц — Личный_ Microsoft​ Edge 18.10.2025 15_39_54.png" alt="Карта плато Путорана" class="map-image" id="mapImage">
+        </div>
+
+        <div class="controls">
+            <div class="control-panel">
+                <h3>📍 Список точек</h3>
+                <div class="point-list" id="pointList">
+                    <!-- Точки будут добавлены динамически -->
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <h3>⚙️ Настройки</h3>
+                <div class="coords-display">
+                    <h4>Выбранная точка:</h4>
+                    <div id="selectedPointInfo">Выберите точку для редактирования</div>
+                </div>
+
+                <div class="coords-input">
+                    <input type="number" id="topInput" placeholder="Top (%)" min="0" max="100" step="0.1">
+                    <input type="number" id="leftInput" placeholder="Left (%)" min="0" max="100" step="0.1">
+                    <button class="btn btn-primary" onclick="updateSelectedPoint()">Обновить</button>
+                </div>
+
+                <button class="btn btn-success" onclick="addNewPoint()">➕ Добавить точку</button>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <h3>📤 Экспорт кода</h3>
+            <div class="export-buttons">
+                <button class="btn btn-primary" onclick="generateCode()">🔄 Сгенерировать код</button>
+                <button class="btn btn-success" onclick="copyCode()">📋 Скопировать код</button>
+            </div>
+            <div class="code-output" id="codeOutput">
+                Код будет сгенерирован после настройки точек...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные точек
+        let points = [
+            { id: 1, name: 'Норильск', top: 15, left: 25, color: '#e74c3c', description: 'Крупнейший город Арктики' },
+            { id: 2, name: 'Дудинка', top: 35, left: 30, color: '#e74c3c', description: 'Столица Таймыра' },
+            { id: 3, name: 'Снежногорск', top: 55, left: 40, color: '#e74c3c', description: 'Город на западной границе плато' },
+            { id: 4, name: 'Путоранский заповедник', top: 60, left: 75, color: '#8e44ad', description: 'Объект ЮНЕСКО' },
+            { id: 5, name: 'Озеро Лама', top: 50, left: 70, color: '#3498db', description: 'Крупнейшее озеро плато' },
+            { id: 6, name: 'Озеро Виви', top: 45, left: 65, color: '#9b59b6', description: 'Географический центр России' },
+            { id: 7, name: 'Озеро Хантайское', top: 40, left: 80, color: '#3498db', description: 'Самое глубокое озеро' },
+            { id: 8, name: 'Тальниковый водопад', top: 35, left: 75, color: '#f39c12', description: 'Самый высокий водопад России' },
+            { id: 9, name: 'Курейский водопад', top: 30, left: 70, color: '#f39c12', description: 'Самый мощный водопад России' },
+            { id: 10, name: 'Озеро Бельдунчана', top: 65, left: 60, color: '#3498db', description: 'Полюс недоступности' },
+            { id: 11, name: 'Шайтан-гора', top: 55, left: 80, color: '#27ae60', description: 'Загадочная гора' }
+        ];
+
+        let selectedPointId = null;
+        let pointCounter = 12;
+
+        // Инициализация
+        function init() {
+            renderPoints();
+            updatePointList();
+        }
+
+        // Отрисовка точек на карте
+        function renderPoints() {
+            const mapEditor = document.getElementById('mapEditor');
+            
+            // Очищаем существующие точки
+            const existingPoints = mapEditor.querySelectorAll('.draggable-point');
+            existingPoints.forEach(point => point.remove());
+
+            // Добавляем новые точки
+            points.forEach(point => {
+                const pointElement = document.createElement('div');
+                pointElement.className = 'draggable-point';
+                pointElement.style.top = point.top + '%';
+                pointElement.style.left = point.left + '%';
+                pointElement.style.background = point.color;
+                pointElement.dataset.pointId = point.id;
+
+                const label = document.createElement('div');
+                label.className = 'point-label';
+                label.textContent = point.name;
+                pointElement.appendChild(label);
+
+                // Обработчики событий
+                pointElement.addEventListener('mousedown', startDrag);
+                pointElement.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectPoint(point.id);
+                });
+
+                mapEditor.appendChild(pointElement);
+            });
+        }
+
+        // Перетаскивание точек
+        let isDragging = false;
+        let dragPoint = null;
+        let dragOffset = { x: 0, y: 0 };
+
+        function startDrag(e) {
+            isDragging = true;
+            dragPoint = e.target;
+            const rect = document.getElementById('mapEditor').getBoundingClientRect();
+            const pointRect = dragPoint.getBoundingClientRect();
+            
+            dragOffset.x = e.clientX - pointRect.left;
+            dragOffset.y = e.clientY - pointRect.top;
+            
+            dragPoint.style.zIndex = '1000';
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            e.preventDefault();
+        }
+
+        function drag(e) {
+            if (!isDragging || !dragPoint) return;
+            
+            const mapEditor = document.getElementById('mapEditor');
+            const rect = mapEditor.getBoundingClientRect();
+            
+            const x = e.clientX - rect.left - dragOffset.x;
+            const y = e.clientY - rect.top - dragOffset.y;
+            
+            const leftPercent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+            const topPercent = Math.max(0, Math.min(100, (y / rect.height) * 100));
+            
+            dragPoint.style.left = leftPercent + '%';
+            dragPoint.style.top = topPercent + '%';
+            
+            // Обновляем данные точки
+            const pointId = parseInt(dragPoint.dataset.pointId);
+            const point = points.find(p => p.id === pointId);
+            if (point) {
+                point.left = leftPercent;
+                point.top = topPercent;
+                updatePointList();
+            }
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            if (dragPoint) {
+                dragPoint.style.zIndex = '10';
+                dragPoint = null;
+            }
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+
+        // Выбор точки
+        function selectPoint(pointId) {
+            selectedPointId = pointId;
+            const point = points.find(p => p.id === pointId);
+            if (point) {
+                document.getElementById('selectedPointInfo').innerHTML = `
+                    <strong>${point.name}</strong><br>
+                    Top: ${point.top.toFixed(1)}%, Left: ${point.left.toFixed(1)}%
+                `;
+                document.getElementById('topInput').value = point.top;
+                document.getElementById('leftInput').value = point.left;
+            }
+        }
+
+        // Обновление выбранной точки
+        function updateSelectedPoint() {
+            if (!selectedPointId) return;
+            
+            const top = parseFloat(document.getElementById('topInput').value);
+            const left = parseFloat(document.getElementById('leftInput').value);
+            
+            if (isNaN(top) || isNaN(left)) return;
+            
+            const point = points.find(p => p.id === selectedPointId);
+            if (point) {
+                point.top = Math.max(0, Math.min(100, top));
+                point.left = Math.max(0, Math.min(100, left));
+                renderPoints();
+                updatePointList();
+                selectPoint(selectedPointId);
+            }
+        }
+
+        // Обновление списка точек
+        function updatePointList() {
+            const pointList = document.getElementById('pointList');
+            pointList.innerHTML = '';
+            
+            points.forEach(point => {
+                const item = document.createElement('div');
+                item.className = 'point-item';
+                item.innerHTML = `
+                    <div class="point-info">
+                        <div class="point-name">${point.name}</div>
+                        <div class="point-coords">Top: ${point.top.toFixed(1)}%, Left: ${point.left.toFixed(1)}%</div>
+                    </div>
+                    <div class="point-actions">
+                        <button class="btn btn-primary" onclick="selectPoint(${point.id})">Выбрать</button>
+                        <button class="btn btn-danger" onclick="removePoint(${point.id})">Удалить</button>
+                    </div>
+                `;
+                pointList.appendChild(item);
+            });
+        }
+
+        // Удаление точки
+        function removePoint(pointId) {
+            if (confirm('Удалить эту точку?')) {
+                points = points.filter(p => p.id !== pointId);
+                renderPoints();
+                updatePointList();
+                if (selectedPointId === pointId) {
+                    selectedPointId = null;
+                    document.getElementById('selectedPointInfo').textContent = 'Выберите точку для редактирования';
+                }
+            }
+        }
+
+        // Добавление новой точки
+        function addNewPoint() {
+            const name = prompt('Введите название точки:');
+            if (name) {
+                const newPoint = {
+                    id: pointCounter++,
+                    name: name,
+                    top: 50,
+                    left: 50,
+                    color: '#e74c3c',
+                    description: 'Новая точка'
+                };
+                points.push(newPoint);
+                renderPoints();
+                updatePointList();
+                selectPoint(newPoint.id);
+            }
+        }
+
+        // Генерация кода
+        function generateCode() {
+            let code = '';
+            
+            points.forEach(point => {
+                code += `            <!-- ${point.name} -->\n`;
+                code += `            <div class="map-point" style="top: ${point.top}%; left: ${point.left}%;" \n`;
+                code += `                 data-title="${point.name}" \n`;
+                code += `                 data-description="${point.description}">\n`;
+                code += `                <div class="point-marker" style="background: ${point.color};"></div>\n`;
+                code += `                <div class="point-tooltip">${point.name}</div>\n`;
+                code += `            </div>\n\n`;
+            });
+            
+            document.getElementById('codeOutput').textContent = code;
+        }
+
+        // Копирование кода
+        function copyCode() {
+            const codeOutput = document.getElementById('codeOutput');
+            codeOutput.select();
+            document.execCommand('copy');
+            alert('Код скопирован в буфер обмена!');
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

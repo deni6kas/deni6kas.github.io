@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Плато Путорана: мечта Путина и терра инкогнита России</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Плато Путорана</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Главная</a></li>
+                <li><a href="#geography" class="nav-link">География</a></li>
+                <li><a href="#nature" class="nav-link">Природа</a></li>
+                <li><a href="#waterfalls" class="nav-link">Водопады</a></li>
+                <li><a href="#wildlife" class="nav-link">Животный мир</a></li>
+                <li><a href="#culture" class="nav-link">Культура</a></li>
+                <li><a href="#mysteries" class="nav-link">Загадки</a></li>
+                <li><a href="gallery.html" class="nav-link">Галерея</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главная секция -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Плато Путорана</h1>
+            <p class="hero-subtitle">Мечта Путина и терра инкогнита России</p>
+            <p class="hero-description">Интерактивный путеводитель по одному из самых загадочных и труднодоступных мест планеты</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">250,000</span>
+                    <span class="stat-label">км² площадь</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">25,000</span>
+                    <span class="stat-label">озёр</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">водопадов</span>
+                </div>
+            </div>
+            <button class="cta-button" onclick="scrollToSection('geography')">
+                <i class="fas fa-compass"></i>
+                Начать путешествие
+            </button>
+        </div>
+        <div class="hero-image">
+            <img src="https://static.tildacdn.com/tild3235-3662-4261-b762-343161656634/I03A0351--__inet.jpg" alt="Плато Путорана" />
+        </div>
+    </section>
+
+    <!-- Почему Путорана -->
+    <section class="why-section">
+        <div class="container">
+            <h2 class="section-title">Почему плато Путорана?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Больше Великобритании</h3>
+                    <p>Площадь плато превышает территорию Великобритании</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Географический центр России</h3>
+                    <p>Озеро Виви — точный географический центр нашей страны</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mountain"></i>
+                    <h3>Рекордные водопады</h3>
+                    <p>Самые высокие и мощные водопады России</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Объект ЮНЕСКО</h3>
+                    <p>Всемирное наследие человечества с 2010 года</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Уникальные экосистемы</h3>
+                    <p>Редкое соседство тайги, лесотундры и тундры</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Нганасаны</h3>
+                    <p>Древнейший северный этнос России</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- География -->
+    <section id="geography" class="geography-section">
+        <div class="container">
+            <h2 class="section-title">Географическое положение</h2>
+            <div class="geography-content">
+                <div class="geography-info">
+                    <div class="info-card">
+                        <h3><i class="fas fa-map"></i> Расположение</h3>
+                        <p>Сибирская Арктика, Красноярский край (69–70° с. ш.)</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-thermometer-half"></i> Климат</h3>
+                        <p>Резко континентальный (разница температур 100°С)</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-volcano"></i> Происхождение</h3>
+                        <p>Извержение супервулкана ~252 млн лет назад</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-ruler"></i> Размеры</h3>
+                        <p>Площадь ~250 000 км², высоты до 1700 м</p>
+                    </div>
+                </div>
+                <div class="geography-map">
+                    <div class="map-container">
+                        <h3>Интерактивная карта плато Путорана</h3>
+                        <div class="map-preview">
+                            <img src="Google Maps и еще 11 страниц — Личный_ Microsoft​ Edge 18.10.2025 15_39_54.png" alt="Карта плато Путорана" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; cursor: pointer;" onclick="window.open('map.html', '_blank')">
+                            <div class="map-overlay">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <p>Кликните для просмотра интерактивной карты</p>
+                                <a href="map.html" class="map-link">Открыть карту</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- История открытия -->
+    <section class="history-section">
+        <div class="container">
+            <h2 class="section-title">Открытие плато Путорана</h2>
+            <div class="history-content">
+                <div class="history-portraits">
+                    <div class="history-portrait">
+                        <div class="portrait-frame">
+                            <img src="https://www.researchgate.net/profile/Maxim-Vinarski/publication/354897981/figure/fig1/AS%3A1073074262786048%401632852249270/Three-ages-of-a-zoologist-portraits-of-Alexander-Middendorff-taken-left-to-right-in_Q640.jpg" alt="Александр Миддендорф" />
+                            <div class="portrait-caption">
+                                <h4>Александр Миддендорф</h4>
+                                <p>Первооткрыватель плато Путорана (1844)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="history-portrait">
+                        <div class="portrait-frame">
+                            <img src="https://goarctic.ru/upload/iblock/ea1/ea119290239be20b89ba2346a965d4d1.jpg" alt="Николай Урванцев" />
+                            <div class="portrait-caption">
+                                <h4>Николай Урванцев</h4>
+                                <p>Топоним «Путорана» нанесен на карту (1921)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="history-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1844</div>
+                        <div class="timeline-content">
+                            <h3>Александр Миддендорф</h3>
+                            <p>Первооткрыватель плато Путорана. Российский естествоиспытатель, путешественник и исследователь Сибири.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1921</div>
+                        <div class="timeline-content">
+                            <h3>Николай Урванцев</h3>
+                            <p>Топоним «Путорана» нанесен на карту. С эвенкийского «Пэтэрэ» - «дымящийся, покрытый облаками»</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Современность</div>
+                        <div class="timeline-content">
+                            <h3>Место первозданной мощи</h3>
+                            <p>Где могут жить только шаманы. С юкагирского «Пурэн анаа» - «горы без вершин»</p>
+                        </div>
+                    </div>
+                    <div class="timeline-image">
+                        <div class="portrait-frame">
+                            <img src="1662138412_54-kartinkin-net-p-plato-putorana-iz-kosmosa-oboi-61.jpg" alt="Плато Путорана с высоты" />
+                            <div class="portrait-caption">
+                                <h4>Плато Путорана</h4>
+                                <p>Вид с высоты на первозданную мощь</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Страна озер -->
+    <section class="lakes-section">
+        <div class="container">
+            <h2 class="section-title">Страна озёр</h2>
+            <div class="lakes-grid">
+                <div class="lake-card">
+                    <div class="lake-image">
+                        <img src="https://gotonature.ru/uploads/posts/2019-02/1550917296_lama.jpg" alt="Озеро Лама" />
+                    </div>
+                    <div class="lake-info">
+                        <h3>Озеро Лама</h3>
+                        <p>Крупнейшее озеро плато (80 км, глубина 350 м)</p>
+                    </div>
+                </div>
+                <div class="lake-card">
+                    <div class="lake-image">
+                        <img src="https://ic.pics.livejournal.com/a_podkorytov/58751144/127783/127783_original.jpg" alt="Озеро Хантайское" />
+                    </div>
+                    <div class="lake-info">
+                        <h3>Озеро Хантайское</h3>
+                        <p>Самое глубокое озеро (≈450 м)</p>
+                    </div>
+                </div>
+                <div class="lake-card">
+                    <div class="lake-image">
+                        <img src="https://puzoterok.net/wp-content/uploads/2019/11/Otrazhenie-gory-i-lesa-v-vode.jpg" alt="Озеро Виви" />
+                    </div>
+                    <div class="lake-info">
+                        <h3>Озеро Виви</h3>
+                        <p>Географический центр России</p>
+                    </div>
+                </div>
+                <div class="lake-card">
+                    <div class="lake-image">
+                        <img src="https://platoputoranatour.ru/images/5f6cd01f79550732cca45e7b_p47.jpg" alt="Озеро Бельдунчана" />
+                    </div>
+                    <div class="lake-info">
+                        <h3>Озеро Бельдунчана</h3>
+                        <p>«Полюс недоступности» России</p>
+                    </div>
+                </div>
+            </div>
+            <div class="lakes-facts">
+                <div class="fact-item">
+                    <i class="fas fa-water"></i>
+                    <span>Более 25 000 реликтовых ледниковых озёр</span>
+                </div>
+                <div class="fact-item">
+                    <i class="fas fa-fish"></i>
+                    <span>Обитают редкие виды рыб: хариус, сиг, ленок, таймень</span>
+                </div>
+                <div class="fact-item">
+                    <i class="fas fa-link"></i>
+                    <span>Связаны между собой каскадом рек и водопадов</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Водопады -->
+    <section id="waterfalls" class="waterfalls-section">
+        <div class="container">
+            <h2 class="section-title">Каскады Путорана</h2>
+            <div class="waterfalls-intro">
+                <p>Крупнейшее средоточие в России: более 1000 водопадов</p>
+            </div>
+            <div class="waterfalls-grid">
+                <div class="waterfall-card featured">
+                    <div class="waterfall-image">
+                        <img src="https://www.russiadiscovery.ru/storage/images/resized/posts/1312/poster/132/original_1920.webp" alt="Тальниковый водопад" />
+                    </div>
+                    <div class="waterfall-info">
+                        <h3>Тальниковый водопад</h3>
+                        <p class="waterfall-description">Самый высокий водопад России (≈700 м, 15 ступеней)</p>
+                        <div class="waterfall-stats">
+                            <span class="stat">700м высота</span>
+                            <span class="stat">15 ступеней</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="waterfall-card">
+                    <div class="waterfall-image">
+                        <img src="https://ic.pics.livejournal.com/gorshkov_sergey/27284117/759027/759027_1000.jpg" alt="Курейский водопад" />
+                    </div>
+                    <div class="waterfall-info">
+                        <h3>Курейский водопад</h3>
+                        <p>Самый мощный водопад (до ~1000 м³/с)</p>
+                    </div>
+                </div>
+                <div class="waterfall-card">
+                    <div class="waterfall-image">
+                        <img src="https://ic.pics.livejournal.com/gorshkov_sergey/27284117/761384/761384_1000.jpg" alt="Кандинский водопад" />
+                    </div>
+                    <div class="waterfall-info">
+                        <h3>Кандинский водопад</h3>
+                        <p>Рекорд свободного падения (≈108 м)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="waterfalls-facts">
+                <div class="fact-card">
+                    <i class="fas fa-snowflake"></i>
+                    <h4>Зимние ледопады</h4>
+                    <p>Зимой водопады превращаются в гигантские ледопады</p>
+                </div>
+                <div class="fact-card">
+                    <i class="fas fa-tint"></i>
+                    <h4>Резервуар пресной воды</h4>
+                    <p>Озёра и водопады Путоран образуют один из крупнейших резервуаров пресной воды на планете</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Природа -->
+    <section id="nature" class="nature-section">
+        <div class="container">
+            <h2 class="section-title">Зелёное богатство Путорана</h2>
+            <div class="nature-content">
+                <div class="nature-zones">
+                    <div class="zone-card">
+                        <h3><i class="fas fa-tree"></i> Нижние склоны</h3>
+                        <p>Лиственницы, ели, берёзы, грибы (белый, подберезовик, масленок, груздь, рыжик)</p>
+                    </div>
+                    <div class="zone-card">
+                        <h3><i class="fas fa-seedling"></i> Средние уровни</h3>
+                        <p>Кустарники (ива, карликовая берёза), ягодники (морошка, голубика, костяника, брусника, клюква)</p>
+                    </div>
+                    <div class="zone-card">
+                        <h3><i class="fas fa-leaf"></i> Верхние плато</h3>
+                        <p>Мхи, лишайники, ягель</p>
+                    </div>
+                </div>
+                <div class="endemics">
+                    <h3>Эндемики плато</h3>
+                    <div class="endemics-list">
+                        <div class="endemic-item">Путоранский колокольчик</div>
+                        <div class="endemic-item">Каменоломка путоранская</div>
+                        <div class="endemic-item">Молодило путоранское</div>
+                        <div class="endemic-item">Ястребинка путоранская</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Животный мир -->
+    <section id="wildlife" class="wildlife-section">
+        <div class="container">
+            <h2 class="section-title">Дикие обитатели Путорана</h2>
+            <div class="wildlife-content">
+                <div class="animals-grid">
+                    <div class="animal-category">
+                        <h3><i class="fas fa-paw"></i> Крупные животные</h3>
+                        <div class="animals-list">
+                            <span class="animal">Северный олень</span>
+                            <span class="animal">Лось</span>
+                            <span class="animal">Бурый медведь</span>
+                            <span class="animal">Росомаха</span>
+                            <span class="animal">Рысь</span>
+                            <span class="animal">Волк</span>
+                        </div>
+                    </div>
+                    <div class="animal-category">
+                        <h3><i class="fas fa-feather-alt"></i> Птицы</h3>
+                        <div class="animals-list">
+                            <span class="animal">Глухарь</span>
+                            <span class="animal">Куропатка</span>
+                            <span class="animal">Черный лебедь</span>
+                            <span class="animal">Казарка</span>
+                            <span class="animal">Орлан-белохвост</span>
+                            <span class="animal">Беркут</span>
+                        </div>
+                    </div>
+                    <div class="animal-category">
+                        <h3><i class="fas fa-fish"></i> Рыбы</h3>
+                        <div class="animals-list">
+                            <span class="animal">Нельма</span>
+                            <span class="animal">Чир</span>
+                            <span class="animal">Муксун</span>
+                            <span class="animal">Сиг</span>
+                            <span class="animal">Хариус</span>
+                            <span class="animal">Таймень</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="snow-sheep">
+                    <div class="snow-sheep-content">
+                        <div class="snow-sheep-image">
+                            <img src="https://goarctic.ru/upload/medialibrary/6b6/6b6fb30f6ed57246b4cd63df259b04c9.jpg" alt="Снежный баран" />
+                        </div>
+                        <div class="snow-sheep-info">
+                            <h3>Снежный баран (Толсторог) – эндемик, визитная карточка Путоран</h3>
+                            <ul>
+                                <li>Реликтовый вид, поселился на плато ~12 000 лет назад</li>
+                                <li>Занесён в Красную книгу</li>
+                                <li>Ради его охраны создан Путоранский заповедник</li>
+                                <li>Обитает на краях плато, скальных обрывах и осыпях</li>
+                                <li>Весит до 100 кг, ловко ходит по узким карнизам</li>
+                                <li>Обладает острым зрением, тонким слухом и обонянием</li>
+                                <li>Индикатор «здоровья» горных экосистем</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Заповедная территория -->
+    <section class="reserve-section">
+        <div class="container">
+            <h2 class="section-title">Заповедная территория Путоран</h2>
+            <div class="reserve-content">
+                <div class="reserve-aspects">
+                    <div class="aspect-card">
+                        <h3><i class="fas fa-road"></i> Труднодоступность</h3>
+                        <ul>
+                            <li>Нет дорог и населённых пунктов</li>
+                            <li>Добраться можно только по рекам, зимникам или вертолётом</li>
+                            <li>Изоляция помогает сохранить природу в первозданном виде</li>
+                        </ul>
+                    </div>
+                    <div class="aspect-card">
+                        <h3><i class="fas fa-shield-alt"></i> Заповедность</h3>
+                        <ul>
+                            <li>Территория входит в Путоранский государственный заповедник</li>
+                            <li>Действует строгий охранный режим: минимальное вмешательство человека</li>
+                            <li>Научные исследования и туризм — только по специальным разрешениям</li>
+                        </ul>
+                    </div>
+                    <div class="aspect-card">
+                        <h3><i class="fas fa-globe"></i> Всемирное наследие ЮНЕСКО (2010)</h3>
+                        <ul>
+                            <li>Признано уникальным природным комплексом мирового значения</li>
+                            <li>Охраняется как ценность всего человечества</li>
+                            <li>Включение в список усилило меры защиты плато</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Культура -->
+    <section id="culture" class="culture-section">
+        <div class="container">
+            <h2 class="section-title">Люди и традиции Путоран</h2>
+            <div class="culture-content">
+                <div class="culture-info">
+                    <div class="culture-text">
+                        <p>Здесь живут нганасаны и другие коренные народы Севера. Их жизнь связана с природой: оленеводство, рыбалка, охота.</p>
+                        <p>Сохранились традиции шаманизма и культ природы. Фольклор, обряды и устное творчество передаются из поколения в поколение.</p>
+                        <p>Малые народы играют важную роль в сохранении культурной идентичности России.</p>
+                    </div>
+                    <div class="culture-images">
+                        <div class="culture-image-item">
+                            <img src="_MG_7583.jpg" alt="Нганасаны в традиционной одежде" />
+                            <div class="image-caption">
+                                <h4>Нганасаны</h4>
+                                <p>Дети нганасанов в традиционной одежде с ритуальными предметами</p>
+                            </div>
+                        </div>
+                        <div class="culture-image-item">
+                            <img src="IMG_6727_1.jpg" alt="Традиции нганасанов" />
+                            <div class="image-caption">
+                                <h4>Традиции</h4>
+                                <p>Шаман с традиционным бубном и ритуальными атрибутами</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="industrial-north">
+                    <h3>Соседство с индустриальным Севером</h3>
+                    <div class="industrial-info">
+                        <div class="industrial-item">
+                            <h4>Норильск</h4>
+                            <p>Крупнейший город Арктики и мировой центр добычи цветных и платиновых металлов (~90 км от плато)</p>
+                        </div>
+                        <div class="industrial-item">
+                            <h4>Дудинка</h4>
+                            <p>Столица Таймыра, ключевой порт Северного морского пути (~120 км от плато)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Загадки -->
+    <section id="mysteries" class="mysteries-section">
+        <div class="container">
+            <h2 class="section-title">Мифы и загадки Путоран</h2>
+            <div class="mysteries-content">
+                <div class="mystery-category">
+                    <h3><i class="fas fa-ufo"></i> Уфология</h3>
+                    <div class="mystery-content">
+                        <p>Плоские вершины — естественные посадочные площадки для кораблей. В непогоду регулярно появляются НЛО; фиксируются «порталы» и энергетические столбы.</p>
+                        <p>Парные горы и «выровненные» уровни служат ориентиром и навигацией.</p>
+                    </div>
+                </div>
+                <div class="mystery-category">
+                    <h3><i class="fas fa-monument"></i> Древние цивилизации</h3>
+                    <div class="mystery-content">
+                        <p>Ступенчатые склоны — рукотворные террасы древних городов. Горизонтальные швы в базальте — следы горных выработок; некоторые озёра — затопленные шахты.</p>
+                        <p>На плато встречаются мегалиты, колоннады, статуи, пирамиды, прямоугольные тоннели и кладки. Шайтан-гора хранит руины колоссальных сооружений (160–180 м) и резьбу по камню.</p>
+                    </div>
+                </div>
+                <div class="mystery-category">
+                    <h3><i class="fas fa-bolt"></i> Энергетические практики</h3>
+                    <div class="mystery-content">
+                        <p>Плато — гигантский природный аккумулятор, копивший энергию миллионы лет. Посетители подзаряжаются силой мест, ощущают прилив ясности и спокойствие.</p>
+                        <p>Здесь приходит просветление: находятся ответы на давние вопросы, выстраивается внутренний порядок.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Президентская мечта -->
+    <section class="president-section">
+        <div class="container">
+            <h2 class="section-title">Плато Путорана — президентская мечта</h2>
+            <div class="president-content">
+                <div class="president-quotes">
+                    <div class="president-quote">
+                        <blockquote>
+                            <p>«Байкал, Камчатка, плато Путорана… Я честно скажу, что я чувствую себя счастливым человеком, который побывал на многих территориях, и счастливым — потому что не на всех ещё»</p>
+                            <footer>— Владимир Путин</footer>
+                        </blockquote>
+                    </div>
+                    <div class="president-quote">
+                        <blockquote>
+                            <p>«Я третий год собираюсь поехать на плато Путорана… К сожалению, времени не хватает, но обязательно это сделаю»</p>
+                            <footer>— Владимир Путин</footer>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="president-photo">
+                    <img src="vladimir_putin_PNG31.png" alt="Владимир Путин" />
+                </div>
+                <div class="president-info">
+                    <p>Владимир Путин не раз подчёркивал интерес к Арктике и плато Путорана — региону, «символизирующему силу, масштаб и богатство России».</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Плато Путорана</h3>
+                    <p>Интерактивный путеводитель по одному из самых загадочных мест России</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Разделы</h4>
+                    <ul>
+                        <li><a href="#geography">География</a></li>
+                        <li><a href="#nature">Природа</a></li>
+                        <li><a href="#waterfalls">Водопады</a></li>
+                        <li><a href="#wildlife">Животный мир</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Информация</h4>
+                    <ul>
+                        <li><a href="#culture">Культура</a></li>
+                        <li><a href="#mysteries">Загадки</a></li>
+                        <li><a href="https://unesco.ru/unescorussia/sites/s1234/">ЮНЕСКО</a></li>
+                        <li><a href="http://zapovedsever.ru/other/putoransky">Заповедник</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Команда проекта</h4>
+                    <p>Захаринский Лев</p>
+                    <p>Березин Денис</p>
+                    <p>Михаил Касаткин</p>
+                    <p>Арсений Рудовский</p>
+                    <p>Максим Дорофеев</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Проект по дисциплине «Основы российской государственности»</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
