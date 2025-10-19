@@ -21,8 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Плавная прокрутка к секциям
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
+            
+            // Если это внешняя ссылка (не начинается с #), не блокируем переход
+            if (!targetId.startsWith('#')) {
+                return;
+            }
+            
+            e.preventDefault();
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
