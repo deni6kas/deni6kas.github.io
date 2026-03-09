@@ -1,0 +1,21 @@
+# Зависимости
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Сборка и кэш
+*.tsbuildinfo
+.turbo/
+
+# Логи и ОС
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Переменные окружения
+.env
+.env.local
+.env*.local

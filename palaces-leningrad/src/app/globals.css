@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-cloud-dancer: #F0EEE9;
+  --color-brass: #C9A46B;
+  --color-charcoal: #2F2F2F;
+  --color-sage: #B2AC88;
+  --color-sand: #E7D8C6;
+}
+
+/* Custom cursor applied via JS when mounted — avoids hydration mismatch */
+body.custom-cursor-active * {
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  body.custom-cursor-active * {
+    cursor: auto;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cloud-dancer);
+}
+
+/* Lenis smooth scroll compatibility */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
